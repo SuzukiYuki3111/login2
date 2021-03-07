@@ -22,6 +22,9 @@
                 <button type="submit"> ログアウト </button>
             </form>
         @endauth
+
+        <a href="{{ route('places.index')}}">場所一覧</a>
+        名前 {{ Auth::user()->name}}
     </header>
 
     @yield('contents')
