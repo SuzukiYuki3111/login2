@@ -7,7 +7,7 @@
     <div>
         <a href="{{ route('places.create') }}">場所追加</a>
     </div>
-    @if (count > 0)
+    @if (count($places) > 0)
         <table>
             <tr>
                 <th>写真</th>
