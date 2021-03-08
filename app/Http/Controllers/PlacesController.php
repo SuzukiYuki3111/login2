@@ -55,7 +55,7 @@ class PlaceController extends Controller
     // 詳細表示画面
     public function show(Place $place)
     {
-        return view ('Places.show',compact('Places'));
+        return view ('Places.show',compact('Place'));
     }
 
     /**
@@ -68,7 +68,7 @@ class PlaceController extends Controller
     // 修正画面
     public function edit(Place $place)
     {
-        return view ('Places.modify',compact('Places'));
+        return view ('Places.modify',compact('Place'));
     }
 
     /**

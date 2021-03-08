@@ -17,14 +17,14 @@
         @auth
             名前 {{ Auth::user()->name }}
 
-            <form action="{{ route('logout') }}" method="POST">
+            <form action="{{ route('logout') }}" method="post">
                 @csrf
                 <button type="submit"> ログアウト </button>
             </form>
-        @endauth
 
-        <a href="{{ route('places.index') }}">場所一覧</a>
-        名前: {{ Auth::user()->name }}
+            <a href="{{ route('places.index') }}">場所一覧</a>
+            名前: {{ Auth::user()->name }}
+        @endauth
     </header>
 
     @yield('contents')
