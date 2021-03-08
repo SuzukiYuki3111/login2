@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Place;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
@@ -42,7 +44,26 @@ class PlaceController extends Controller
 
     public function store(Request $request)
     {
+        //バリデーション（入力チェック）
+        $data = $request->validate([
+            "name" => 'required|string',
+            "description" => 'required|string',
+            "map_url" => 'required|url',
+            "img" => 'required|file',
+        ]);
 
+        // placesフォルダを作り、保存する
+        $path = Storage::putFile('places', $data['img']);
+        $data['img'] = $path;
+
+        // $data['user_id']としてログインしているユーザーのIDを代入
+        $data['user_id'] = Auth::user()->id;
+
+        // データベースに格納
+        $place = Place::create('data');
+
+        // 場所詳細ページに遷移させる
+        return redirect()->to(route('places.show', compact('place')));
     }
 
     /**
