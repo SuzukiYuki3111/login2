@@ -3,8 +3,42 @@
 @section('contents')
 
 <div>
-		<!-- ここだけタイトルを入れましょう。 -->
-    <h1>場所一覧|場所追加|場所詳細|場所修正</h1>
+    <h1>場所詳細</h1>
+
+    <table>
+        <tr>
+            <th>写真</th>
+            <td>
+                <img src="{{ asset('strage/' .$place->img) }}">
+            </td>
+        </tr>
+        <tr>
+            <th>名称</th>
+            <td>
+                {{ $place->name }}
+            </td>
+        </tr>
+        <tr>
+            <th>詳細</th>
+            <td>
+                {{!! nl2br($place->description) !!}}
+            </td>
+        </tr>
+        <tr>
+            <th>マップURL</th>
+            <td>
+                <a href="{{ $place->map_url }}" target="_blank">確認</a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="{{ route('places.index') }}">一覧</a>
+    <a href="{{ route('places.edit', compact('place')) }}">修正</a>
+    <form action="{{ route('places.destroy', compact('place')) }}">
+        @method('delete')
+        @csrf
+        <button type="submit">削除</button>
+    </form>
 </div>
 
 @endsection

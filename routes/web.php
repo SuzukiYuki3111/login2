@@ -1,7 +1,9 @@
 <?php
 
 use GuzzleHttp\Middleware;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +26,6 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('places', 'App\Http\Controllers\PlacesController')
-    ->middleware(['auth']);
+//Route::resource('places', 'App\Http\Controllers\PlacesController');
+//     ->middleware(['auth']);
+

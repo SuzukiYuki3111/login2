@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class PlaceController extends Controller
+class PlacesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class PlaceController extends Controller
     public function index()
     {
         $places = Place::paginate();
-        return view ('places.index', compact('Places'));
+        return view ('places.index', compact('places'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PlaceController extends Controller
     // 追加画面表示
     public function create()
     {
-        return view ('Places.create');
+        return view ('places.create');
     }
 
     /**
@@ -76,7 +76,7 @@ class PlaceController extends Controller
     // 詳細表示画面
     public function show(Place $place)
     {
-        return view ('Places.show',compact('Place'));
+        return view ('places.show',compact('place'));
     }
 
     /**
@@ -89,7 +89,7 @@ class PlaceController extends Controller
     // 修正画面
     public function edit(Place $place)
     {
-        return view ('Places.modify',compact('Place'));
+        return view ('places.modify',compact('place'));
     }
 
     /**
@@ -99,9 +99,30 @@ class PlaceController extends Controller
      * @param  \App\Models\Place  $place
      * @return \Illuminate\Http\Response
      */
+
+    // 更新
     public function update(Request $request, Place $place)
     {
-        //
+         //リクエストバリデーション
+         $data = $request->validate([
+            "name" => 'required|string',
+            "description" => 'required|string',
+            "map_url" => 'required|url',
+            "img" => 'file',
+        ]);
+
+        // ファイルがあったら、保存済みのファイルを削除＆新しいファイルの取得
+        if(isset($data['img'])){
+            Storage::delate($place->img);
+            $path = Storage::putFile('places', $data['img']);
+            $data['img'] = $path;
+        }
+
+        // データベースをアップデート
+        $place->update($data);
+
+        // その後、場所詳細ページに移動する
+        return redirect()->to(route('places.show', compact('place')));
     }
 
     /**
@@ -110,8 +131,11 @@ class PlaceController extends Controller
      * @param  \App\Models\Place  $place
      * @return \Illuminate\Http\Response
      */
+
+    // 削除
     public function destroy(Place $place)
     {
-        //
+        $place->delate();
+        return redirect()->to(route('place.index'));
     }
 }
