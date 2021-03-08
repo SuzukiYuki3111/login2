@@ -26,6 +26,6 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-//Route::resource('places', 'App\Http\Controllers\PlacesController');
-//     ->middleware(['auth']);
+Route::resource('places', 'App\Http\Controllers\PlacesController')
+     ->middleware(['auth']);
 

@@ -41,7 +41,7 @@ class PlacesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    // 新規作成
     public function store(Request $request)
     {
         //バリデーション（入力チェック）
@@ -60,7 +60,7 @@ class PlacesController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         // データベースに格納
-        $place = Place::create('data');
+        $place = Place::create($data);
 
         // 場所詳細ページに遷移させる
         return redirect()->to(route('places.show', compact('place')));
